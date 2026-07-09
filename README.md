@@ -147,6 +147,7 @@ Current repository status:
 * API contract defined,
 * database schema defined,
 * persistence model documented,
+* work schedule defined,
 * architecture under development.
 
 Implementation is currently in progress.
