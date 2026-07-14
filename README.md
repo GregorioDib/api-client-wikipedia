@@ -148,7 +148,8 @@ Current repository status:
 * database schema defined,
 * persistence model documented,
 * work schedule defined,
-* architecture under development.
+* project skeleton implemented,
+* initial build system verified
 
 Implementation is currently in progress.
 

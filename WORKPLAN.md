@@ -27,7 +27,7 @@ Commits will represent completed functionalities rather than individual source f
 
 # Milestones
 
-## Milestone 1 — Project Skeleton
+## Milestone 1 — Project Skeleton [DONE]
 
 **Objective**
 
