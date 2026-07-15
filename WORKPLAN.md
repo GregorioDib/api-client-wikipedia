@@ -44,7 +44,7 @@ Create the initial project structure.
 
 ---
 
-## Milestone 2 — Database Layer
+## Milestone 2 — Database Layer [DONE]
 
 **Objective**
 
