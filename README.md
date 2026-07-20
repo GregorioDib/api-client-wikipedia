@@ -143,18 +143,21 @@ The application workflow is expected to be:
 
 Current repository status:
 
-* repository initialized,
-* API contract defined,
-* database schema defined,
-* persistence model documented,
-* work schedule defined,
-* project skeleton implemented,
-* database layer implemented
-* automatic database initialization
-* schema integration completed
+- repository initialized
+- API contract defined
+- database schema defined
+- persistence model documented
+- work schedule defined
+- project skeleton implemented
+- database layer implemented
+- automatic database initialization
+- schema integration completed
+- HTTP client implemented
+- Wikipedia REST API communication established
+- HTTP response retrieval completed
+- network error handling implemented
 
 Implementation is currently in progress.
-
 ---
 
 # Notes

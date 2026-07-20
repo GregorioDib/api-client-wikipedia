@@ -60,7 +60,7 @@ Implement database initialization and persistence infrastructure.
 
 ---
 
-## Milestone 3 — Wikipedia API Client
+## Milestone 3 — Wikipedia API Client [DONE]
 
 **Objective**
 

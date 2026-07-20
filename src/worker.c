@@ -1,9 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "config.h"
 #include "worker.h"
 #include "database.h"
+#include "http.h"
 
 int worker_run(int argc, char *argv[]){
 
@@ -16,7 +18,26 @@ int worker_run(int argc, char *argv[]){
         return EXIT_FAILURE;
     }
     
-    printf("Worker initialized.\n");
+    
+    // PLACEHOLDER - Build the request URL
+    char url[512];
+
+    snprintf(url, sizeof(url), "%sLinux", WIKIPEDIA_API_BASE);
+
+    long status;
+
+    char *response = http_get(url, &status);
+
+    if (response == NULL){
+        database_close();
+        return EXIT_FAILURE;
+    }
+
+    printf("HTTP Status: %ld\n\n", status);
+
+    printf("%s\n", response);
+
+    free(response);
 
     database_close();
 
