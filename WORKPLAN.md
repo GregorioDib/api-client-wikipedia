@@ -75,7 +75,7 @@ Implement communication with the Wikipedia REST API.
 
 ---
 
-## Milestone 4 — JSON Processing
+## Milestone 4 — JSON Processing [DONE]
 
 **Objective**
 

@@ -1,6 +1,6 @@
 # api-client-wikipedia
 
-Simple API client worker for consuming the Wikipedia public API and persisting metadata into an SQL database.
+Simple API client worker for consuming the Wikipedia public API and persisting Wikipedia metadata and complete API responses into an SQLite database.
 
 ---
 
@@ -130,16 +130,35 @@ The application workflow is expected to be:
 
 ---
 
-# Technologies
+## Technologies
 
-* C
-* HTTP client library
-* JSON parser
-* SQLite
+- C
+- libcurl (HTTP client)
+- cJSON (JSON parser)
+- SQLite3
+- Make
 
 ---
 
-# Current Status
+## Dependencies
+
+The project currently depends on the following libraries:
+
+- SQLite3
+- libcurl
+- cJSON
+
+On Debian/Ubuntu systems they can be installed with:
+
+```bash
+sudo apt install sqlite3 libsqlite3-dev
+sudo apt install libcurl4-openssl-dev
+sudo apt install libcjson-dev
+```
+
+---
+
+## Current Status
 
 Current repository status:
 
@@ -156,8 +175,13 @@ Current repository status:
 - Wikipedia REST API communication established
 - HTTP response retrieval completed
 - network error handling implemented
+- JSON parser implemented
+- Wikipedia metadata extraction implemented
+- required field validation completed
+- internal article representation implemented
 
 Implementation is currently in progress.
+
 ---
 
 # Notes

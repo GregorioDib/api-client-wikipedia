@@ -2,7 +2,7 @@
 
 // App info
 #define PROGRAM_NAME    "api-client-wikipedia"
-#define PROGRAM_VERSION "0.1.0"
+#define PROGRAM_VERSION "0.4.0"
 
 // Wikipedia REST API base endpoint
 #define WIKIPEDIA_API_BASE "https://en.wikipedia.org/api/rest_v1/page/summary/"

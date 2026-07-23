@@ -6,6 +6,7 @@
 #include "worker.h"
 #include "database.h"
 #include "http.h"
+#include "json.h"
 
 int worker_run(int argc, char *argv[]){
 
@@ -35,11 +36,24 @@ int worker_run(int argc, char *argv[]){
 
     printf("HTTP Status: %ld\n\n", status);
 
-    printf("%s\n", response);
+    wiki_article_t article;
 
+    if (json_parse_article(response, &article) != 0){
+        fprintf(stderr, "Unable to parse Wikipedia response.\n");
+        free(response);
+        database_close();
+        return EXIT_FAILURE;
+    }
+
+    //Display of metadata
+
+    printf("Title       : %s\n", article.title);
+    printf("Description : %s\n", article.description);
+    printf("URI         : %s\n", article.asset_uri);
+    printf("Payload size: %zu bytes\n\n", strlen(article.meta_payload));
+
+    wiki_article_destroy(&article);
     free(response);
-
     database_close();
-
     return EXIT_SUCCESS;
 }
