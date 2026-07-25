@@ -1,7 +1,12 @@
 #pragma once
 
-// Initializes the SQLite database connection (Creates it if it dosen't exist)
+#include <sqlite3.h>
+
+// Initializes the SQLite database connection (Creates it, if it does not exist)
 int database_init(void);
 
-//Closes the current database connection.
+// Pointer to the active connection
+sqlite3 *database_get_connection(void);
+
+// Closes the database connection
 void database_close(void);

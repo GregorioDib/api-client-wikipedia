@@ -8,7 +8,8 @@ SRC = src/main.c \
       src/worker.c \
       src/database.c \
       src/http.c \
-      src/json.c
+      src/json.c \
+      src/persistence.c
 
 OBJ = $(SRC:.c=.o)
 

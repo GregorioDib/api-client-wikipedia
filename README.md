@@ -136,7 +136,7 @@ The application workflow is expected to be:
 - libcurl (HTTP client)
 - cJSON (JSON parser)
 - SQLite3
-- Make
+- GNU Make
 
 ---
 
@@ -179,8 +179,10 @@ Current repository status:
 - Wikipedia metadata extraction implemented
 - required field validation completed
 - internal article representation implemented
-
-Implementation is currently in progress.
+- command-line argument handling implemented
+- complete worker execution pipeline implemented
+- metadata persistence implemented
+- complete JSON payload persistence implemented
 
 ---
 

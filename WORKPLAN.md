@@ -90,7 +90,7 @@ Process Wikipedia API responses.
 
 ---
 
-## Milestone 5 — Worker Orchestration
+## Milestone 5 — Worker Orchestration [DONE]
 
 **Objective**
 

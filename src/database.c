@@ -78,6 +78,10 @@ int database_init(void){
     return 0;
 }
 
+sqlite3 *database_get_connection(void){
+    return db;
+}
+
 void database_close(void){
     if (db != NULL) {
         sqlite3_close(db);
