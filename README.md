@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS assets_history (
 
 The project also supports historical persistence of asset metadata.
 
-When an existing asset is updated, the previous state may be stored in the `assets_history` table as a JSON snapshot.
+When an existing asset is updated, the previous state is stored in the `assets_history` table as a JSON snapshot.
 
 This allows:
 
@@ -126,7 +126,7 @@ The application workflow is expected to be:
 4. Extract relevant metadata.
 5. Persist the resource into the SQL database.
 6. Store the complete JSON payload for future processing.
-7. Optionally preserve previous versions in the history table.
+7. Previous metadata versions are automatically preserved before an asset is updated.
 
 ---
 
@@ -183,6 +183,10 @@ Current repository status:
 - complete worker execution pipeline implemented
 - metadata persistence implemented
 - complete JSON payload persistence implemented
+- asset update detection implemented
+- asset history support implemented
+- automatic history snapshot generation
+- update workflow completed
 
 ---
 

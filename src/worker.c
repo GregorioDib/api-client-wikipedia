@@ -58,26 +58,34 @@ int worker_run(int argc, char *argv[]){
     // Persistence of the article
     printf("Persisting article...\n");
 
-    long long asset_id = persistence_save_article(&article);
+    long long asset_id = 0;
 
-    if (asset_id < 0){
+    persistence_result_t result = persistence_save_article(&article, &asset_id);
+
+    switch (result){
+
+    case PERSISTENCE_INSERTED:
+        printf("Article stored successfully.\n");
+        printf("Asset ID    : %lld\n", asset_id);
+        break;
+
+    case PERSISTENCE_UPDATED:
+        printf("Article updated successfully.\n");
+        printf("Asset ID    : %lld\n", asset_id);
+        break;
+
+    case PERSISTENCE_UNCHANGED:
+        printf("Article already up to date.\n");
+        printf("Asset ID    : %lld\n", asset_id);
+        break;
+
+    default:
         fprintf(stderr, "Unable to persist article.\n");
-
-        wiki_article_destroy(&article);
-        free(response);
-        database_close();
-
-        return EXIT_FAILURE;
     }
 
-    printf("Article stored successfully.\n");
-    printf("Asset ID    : %lld\n", asset_id);
-
-    //Cleanup
     wiki_article_destroy(&article);
     free(response);
-
     database_close();
 
-    return EXIT_SUCCESS;
+    return EXIT_FAILURE;
 }

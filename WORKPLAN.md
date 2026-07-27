@@ -105,7 +105,7 @@ Integrate all modules into a complete worker pipeline.
 
 ---
 
-## Milestone 6 — Asset History Support
+## Milestone 6 — Asset History Support [DONE]
 
 **Objective**
 
