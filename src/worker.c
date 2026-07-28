@@ -11,10 +11,11 @@
 
 int worker_run(int argc, char *argv[]){
 
-    printf("%s %s\n", PROGRAM_NAME, PROGRAM_VERSION);
+    printf("\n%s %s\n\n", PROGRAM_NAME, PROGRAM_VERSION);
 
     if (argc != 2){
         fprintf(stderr, "Usage: %s <article>\n", PROGRAM_NAME);
+        
         return EXIT_FAILURE;
     }
     
@@ -23,30 +24,35 @@ int worker_run(int argc, char *argv[]){
     }
     
     
-    // Build the wikipedia request URL
+    // Build the Wikipedia request URL
     char url[512];
 
     snprintf(url, sizeof(url), "%s%s", WIKIPEDIA_API_BASE, argv[1]);
 
     long status;
     
-    //Downloads the article
+    // Downloads the article
     char *response = http_get(url, &status);
 
     if (response == NULL){
         database_close();
+        
         return EXIT_FAILURE;
     }
 
-    printf("HTTP Status: %ld\n\n", status);
+    if (status != 200) {
+        printf("HTTP Status: %ld\n\n", status);
+    }
 
-    //Parses JSON response
+    // Parses JSON response
     wiki_article_t article;
 
     if (json_parse_article(response, &article) != 0){
         fprintf(stderr, "Unable to parse Wikipedia response.\n");
         free(response);
+        
         database_close();
+        
         return EXIT_FAILURE;
     }
 
@@ -56,7 +62,6 @@ int worker_run(int argc, char *argv[]){
     printf("URI         : %s\n\n", article.asset_uri);
 
     // Persistence of the article
-    printf("Persisting article...\n");
 
     long long asset_id = 0;
 
@@ -64,28 +69,29 @@ int worker_run(int argc, char *argv[]){
 
     switch (result){
 
-    case PERSISTENCE_INSERTED:
-        printf("Article stored successfully.\n");
-        printf("Asset ID    : %lld\n", asset_id);
-        break;
+      case PERSISTENCE_INSERTED:
+          printf("Result      : Article stored successfully\n");
+          printf("Asset ID    : %lld\n", asset_id);
+          break;
 
-    case PERSISTENCE_UPDATED:
-        printf("Article updated successfully.\n");
-        printf("Asset ID    : %lld\n", asset_id);
-        break;
+      case PERSISTENCE_UPDATED:
+          printf("Result      : Article updated successfully\n");
+          printf("Asset ID    : %lld\n", asset_id);
+          break;
 
-    case PERSISTENCE_UNCHANGED:
-        printf("Article already up to date.\n");
-        printf("Asset ID    : %lld\n", asset_id);
-        break;
+      case PERSISTENCE_UNCHANGED:
+          printf("Result      : Article already stored and up to date\n");
+          printf("Asset ID    : %lld\n", asset_id);
+          break;
 
-    default:
-        fprintf(stderr, "Unable to persist article.\n");
+      default:
+          fprintf(stderr, "Unable to persist article.\n");
     }
 
     wiki_article_destroy(&article);
     free(response);
+    
     database_close();
 
-    return EXIT_FAILURE;
+    return EXIT_SUCCESS;
 }

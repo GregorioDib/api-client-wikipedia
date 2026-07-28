@@ -2,10 +2,10 @@
 
 #include <sqlite3.h>
 
-// Initializes the SQLite database connection (Creates it, if it does not exist)
+// Initializes the SQLite database connection
 int database_init(void);
 
-// Pointer to the active connection
+// Returns pointer to the active SQLite connection
 sqlite3 *database_get_connection(void);
 
 // Closes the database connection

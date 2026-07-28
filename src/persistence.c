@@ -8,10 +8,13 @@
 #include "database.h"
 #include "persistence.h"
 
+//------------------------------------------PRIVATE HELPER FUNCTIONS--------------------------------------------
+
 // Duplicates a C string using dynamic memory.
-static char *string_duplicate(const char *source)
-{
+static char *string_duplicate(const char *source){
+
     if (source == NULL){
+    
         return NULL;
     }
     
@@ -20,6 +23,7 @@ static char *string_duplicate(const char *source)
     char *copy = malloc(length);
 
     if (copy == NULL){
+    
         return NULL;
     }
     
@@ -34,6 +38,7 @@ static int load_existing_asset(const char *asset_uri, long long *asset_id, char 
     sqlite3 *db = database_get_connection();
 
     if (db == NULL){
+    
         return -1;
     }
 
@@ -57,18 +62,31 @@ static int load_existing_asset(const char *asset_uri, long long *asset_id, char 
     if (rc == SQLITE_ROW){
         *asset_id = sqlite3_column_int64(statement, 0);
 
-        const unsigned char *payload = sqlite3_column_text(statement, 1);
+    const unsigned char *payload = sqlite3_column_text(statement, 1);
 
-        *meta_payload = string_duplicate((const char *)payload);
-
+    if (payload == NULL){
         sqlite3_finalize(statement);
+        
+        return -1;
+    }
 
-        return 1;
+    *meta_payload = string_duplicate((const char *)payload);
+    
+    if (*meta_payload == NULL){
+        sqlite3_finalize(statement);
+        
+        return -1;
     }
 
     sqlite3_finalize(statement);
 
+    return 1;
+}
+
+    sqlite3_finalize(statement);
+
     if (rc == SQLITE_DONE){
+    
         return 0;
     }
 
@@ -103,6 +121,7 @@ static int insert_history_entry(long long asset_id, const char *history_payload)
     sqlite3_bind_text(statement, 2, history_payload, -1, SQLITE_STATIC);
 
     if (sqlite3_step(statement) != SQLITE_DONE){
+    
         fprintf(stderr, "Unable to insert history entry: %s\n", sqlite3_errmsg(db));
 
         sqlite3_finalize(statement);
@@ -158,16 +177,20 @@ static int update_existing_asset(long long asset_id, const wiki_article_t *artic
     return 0;
 }
 
+//------------------------------------------PUBLIC INTERFACE--------------------------------------------
+
 // Persists a Wikipedia article into the database
 persistence_result_t persistence_save_article(const wiki_article_t *article, long long *asset_id){
 
     if (article == NULL || asset_id == NULL){
+    
         return PERSISTENCE_ERROR;
     }
 
     sqlite3 *db = database_get_connection();
 
     if (db == NULL){
+    
         return PERSISTENCE_ERROR;
     }
 
@@ -177,10 +200,11 @@ persistence_result_t persistence_save_article(const wiki_article_t *article, lon
     int exists = load_existing_asset(article->asset_uri, &existing_id, &existing_payload);
 
     if (exists == -1){
+    
         return PERSISTENCE_ERROR;
     }
 
-    //Existing asset
+    // Existing asset
     if (exists == 1) {
 
         // Nothing changed
@@ -193,7 +217,7 @@ persistence_result_t persistence_save_article(const wiki_article_t *article, lon
             return PERSISTENCE_UNCHANGED;
         }
 
-        // Save previous version into history
+        // Preserve the previous version
         if (insert_history_entry(existing_id, existing_payload) != 0){
         
             free(existing_payload);
@@ -214,7 +238,7 @@ persistence_result_t persistence_save_article(const wiki_article_t *article, lon
         return PERSISTENCE_UPDATED;
     }
 
-    //Asset does not exist -> insert.
+    // If the asset does not exist -> insert
 
     static const char *sql =
         "INSERT INTO assets "
@@ -231,16 +255,12 @@ persistence_result_t persistence_save_article(const wiki_article_t *article, lon
     }
 
     sqlite3_bind_text(statement, 1, article->asset_uri, -1, SQLITE_STATIC);
-
     sqlite3_bind_text(statement, 2, article->title, -1, SQLITE_STATIC);
-
     sqlite3_bind_text(statement, 3, "article", -1, SQLITE_STATIC);
-
     sqlite3_bind_text(statement, 4, PROVIDER_NAME, -1, SQLITE_STATIC);
-
     sqlite3_bind_text(statement, 5, article->meta_payload, -1, SQLITE_STATIC);
 
-    if (sqlite3_step(statement) != SQLITE_DONE) {
+    if (sqlite3_step(statement) != SQLITE_DONE){
 
         fprintf(stderr, "Unable to store article: %s\n", sqlite3_errmsg(db));
 

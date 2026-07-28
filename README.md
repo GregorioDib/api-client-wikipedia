@@ -4,9 +4,9 @@ Simple API client worker for consuming the Wikipedia public API and persisting W
 
 ---
 
-# Objective
+## Objective
 
-The goal of this project is to build a worker application capable of:
+The goal of this project was to build a worker application capable of:
 
 * consuming an external public API,
 * processing JSON responses,
@@ -15,6 +15,19 @@ The goal of this project is to build a worker application capable of:
 The assigned provider for this implementation is Wikipedia.
 
 The project aims to emulate a lightweight "second brain" persistence system capable of aggregating heterogeneous external data sources under a common storage model.
+
+## Usage
+
+Build the project:
+
+```bash
+make
+```
+
+Run the worker:
+```bash
+./api-client-wikipedia Linux
+```
 
 ---
 
@@ -116,17 +129,17 @@ The original external source is never modified.
 
 ---
 
-# Planned Architecture
+# Application Workflow
 
-The application workflow is expected to be:
+The application workflow is:
 
 1. Receive an article title as input.
 2. Perform an HTTP request to the Wikipedia API.
-3. Receive and parse the JSON response.
-4. Extract relevant metadata.
-5. Persist the resource into the SQL database.
-6. Store the complete JSON payload for future processing.
-7. Previous metadata versions are automatically preserved before an asset is updated.
+3. Parse the JSON response.
+4. Extract the required metadata.
+5. Persist the article into the SQLite database.
+6. Store the complete JSON payload
+7. Automatically preserve the previous version whenever an asset changes.
 
 ---
 
@@ -160,33 +173,21 @@ sudo apt install libcjson-dev
 
 ## Current Status
 
-Current repository status:
+The implementation is complete.
 
-- repository initialized
-- API contract defined
-- database schema defined
-- persistence model documented
-- work schedule defined
-- project skeleton implemented
-- database layer implemented
-- automatic database initialization
-- schema integration completed
-- HTTP client implemented
-- Wikipedia REST API communication established
-- HTTP response retrieval completed
-- network error handling implemented
-- JSON parser implemented
-- Wikipedia metadata extraction implemented
-- required field validation completed
-- internal article representation implemented
-- command-line argument handling implemented
-- complete worker execution pipeline implemented
-- metadata persistence implemented
-- complete JSON payload persistence implemented
-- asset update detection implemented
-- asset history support implemented
-- automatic history snapshot generation
-- update workflow completed
+Implemented features include:
+
+- SQLite database initialization
+- Wikipedia REST API communication
+- HTTP response retrieval
+- JSON parsing and validation
+- Internal article representation
+- Complete worker execution pipeline
+- Metadata persistence
+- Raw JSON payload storage
+- Asset update detection
+- Automatic historical snapshot generation
+- History management for updated assets
 
 ---
 
@@ -194,5 +195,5 @@ Current repository status:
 
 This project is intended for educational purposes.
 
-The worker acts only as a consumer of public information and does not modify Wikipedia content.
+The application acts exclusively as a consumer of public information provided by the Wikipedia REST API. No remote content is modified.
 

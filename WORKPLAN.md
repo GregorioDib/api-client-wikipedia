@@ -4,24 +4,22 @@
 
 Develop a modular worker application in C capable of consuming the Wikipedia public API, processing JSON responses, and persisting article metadata into a relational SQL database.
 
-The project is intended to follow an incremental development process, where each milestone produces a functional and compilable version of the application.
-
-The provisional target completion date is **July 28, 2026**, allowing approximately one week before the planned project presentation.
+The project followed an incremental development process, where each milestone produced a functional and compilable version of the application.
 
 ---
 
 # Development Strategy
 
-The implementation will be divided into small, functional milestones.
+The implementation was divided into small, functional milestones.
 
-Each milestone should:
+Each milestone:
 
-* produce a compilable project;
-* introduce one major feature;
-* be committed independently to Git;
-* keep the repository in a working state.
+* produced a compilable project;
+* introduced one major feature;
+* was committed independently to Git;
+* kept the repository in a working state.
 
-Commits will represent completed functionalities rather than individual source files.
+The commits represented completed functionalities rather than individual source files.
 
 ---
 
@@ -120,7 +118,7 @@ Preserve historical versions of stored assets.
 
 ---
 
-## Milestone 7 — Validation and Documentation
+## Milestone 7 — Validation and Documentation [DONE]
 
 **Objective**
 
@@ -136,19 +134,9 @@ Prepare the project for delivery.
 
 ---
 
-# Repository Workflow
+# Final Result
 
-The repository will evolve through small, incremental commits.
-
-Each commit should correspond to one completed functionality instead of isolated file modifications.
-
-Every milestone should leave the project in a compilable and executable state.
-
----
-
-# Expected Final Result
-
-At the end of the project, the worker will be capable of:
+The completed application is capable of:
 
 * querying the Wikipedia public REST API;
 * processing JSON responses;
